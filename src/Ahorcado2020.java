@@ -14,10 +14,35 @@ import javax.swing.JButton;
 public class Ahorcado2020 extends javax.swing.JFrame {
 
     int numeroFallos = 0;
+
+    String palabraOculta = "CETYS";
 //este metodo recibe el botón queha sido pulsado y procesamla letra que tiene en su etiqueta
 
     private void chequeaBoton(JButton boton) {
         boton.setEnabled(false);
+        chequeaLetra(boton.getText());
+    }
+
+    private void chequeaLetra(String letra) {
+        String palabraConGuiones = jLabel1.getText();
+        if (palabraOculta.contains(letra)) {
+            //en este caso la letra si que esta
+            //y hay que hacer que la 1º que la letra o letras se descubran en los guiones
+            char letraPulsada = letra.charAt(0);
+            for (int i = 0; i < palabraOculta.length(); i++) {
+                if (palabraOculta.charAt(i) == letraPulsada) {
+                    palabraConGuiones =
+                            palabraConGuiones.substring(0,2*i)
+                            + letra
+                            + palabraConGuiones.substring(2*i+1);
+                }
+            }
+            jLabel1.setText(palabraConGuiones);
+        } else {
+            numeroFallos++;
+            dibujaImagen();
+        }
+        
     }
 
     //cambia la imagen en funcion de cuantos fallos llevamos
@@ -52,7 +77,7 @@ public class Ahorcado2020 extends javax.swing.JFrame {
                         .getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT)
         );
         //cargo la imagen en el jLabel que muestra que fallo llevamos
-       jLabel2.setIcon(miImagen);
+        jLabel2.setIcon(miImagen);
     }
 
     /**
