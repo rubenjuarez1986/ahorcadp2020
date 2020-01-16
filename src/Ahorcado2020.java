@@ -31,24 +31,32 @@ public class Ahorcado2020 extends javax.swing.JFrame {
             char letraPulsada = letra.charAt(0);
             for (int i = 0; i < palabraOculta.length(); i++) {
                 if (palabraOculta.charAt(i) == letraPulsada) {
-                    palabraConGuiones =
-                            palabraConGuiones.substring(0,2*i)
+                    palabraConGuiones
+                            = palabraConGuiones.substring(0, 2 * i)
                             + letra
-                            + palabraConGuiones.substring(2*i+1);
+                            + palabraConGuiones.substring(2 * i + 1);
                 }
             }
             jLabel1.setText(palabraConGuiones);
-        } else {
+            if (!palabraConGuiones.contains("-")) {
+                numeroFallos = -1;
+                dibujaImagen();
+            }
+        } 
+        else {
             numeroFallos++;
             dibujaImagen();
         }
-        
+
     }
 
     //cambia la imagen en funcion de cuantos fallos llevamos
     private void dibujaImagen() {
         String nombreImagen = "";
         switch (numeroFallos) {
+            case -1:
+                nombreImagen = "/imagenes/acertasteTodo.png";
+                break;
             case 0:
                 nombreImagen = "/imagenes/ahorcado_0.png";
                 break;
