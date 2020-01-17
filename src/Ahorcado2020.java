@@ -15,13 +15,15 @@ import javax.swing.JButton;
 public class Ahorcado2020 extends javax.swing.JFrame {
 
     int numeroFallos = 0;
-
+    boolean partidaTerminada = false; //indica si la partida ha terminado
     String palabraOculta = eligePalabra();
 //este metodo recibe el botón queha sido pulsado y procesamla letra que tiene en su etiqueta
 
     private void chequeaBoton(JButton boton) {
-        boton.setEnabled(false);
-        chequeaLetra(boton.getText());
+        if (!partidaTerminada) {
+            boton.setEnabled(false);
+            chequeaLetra(boton.getText());
+        }
     }
 
     private void chequeaLetra(String letra) {
@@ -39,13 +41,17 @@ public class Ahorcado2020 extends javax.swing.JFrame {
                 }
             }
             jLabel1.setText(palabraConGuiones);
+            //si los guiones bajos se han terminado ganas la partida
             if (!palabraConGuiones.contains("-")) {
                 numeroFallos = -1;
                 dibujaImagen();
+                partidaTerminada = true;
             }
-        } 
-        else {
+        } else {
             numeroFallos++;
+            if (numeroFallos == 6) {
+                partidaTerminada = true;
+            }
             dibujaImagen();
         }
 
@@ -98,18 +104,20 @@ public class Ahorcado2020 extends javax.swing.JFrame {
         dibujaImagen();
         //inicializo el jLabel en el que se muestran los guiones bajos
         String auxiliar = "";
-        for (int i=0; i < palabraOculta.length();i++){
-        auxiliar = auxiliar +"_ ";
+        for (int i = 0; i < palabraOculta.length(); i++) {
+            auxiliar = auxiliar + "_ ";
         }
         jLabel1.setText(auxiliar);
     }
 //eligePalabra va a seleccionar una palabra al azarde un array de palabras
-    private String eligePalabra(){
-    String[]listaPalabras ={"CETYS","HOLA","VLADIKAKA","BORREGUITO","BABYYODA"};
-    Random aleatorio = new Random();//variable aleatoria para elegir una palabra
-    int posicion = aleatorio.nextInt(listaPalabras.length);
-    return listaPalabras[posicion].toUpperCase();//elige la palabra de la lista y la combierte en mayusculas
+
+    private String eligePalabra() {
+        String[] listaPalabras = {"CETYS", "HOLA", "VLADIKAKA", "BORREGUITO", "BABYYODA"};
+        Random aleatorio = new Random();//variable aleatoria para elegir una palabra
+        int posicion = aleatorio.nextInt(listaPalabras.length);
+        return listaPalabras[posicion].toUpperCase();//elige la palabra de la lista y la combierte en mayusculas
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
