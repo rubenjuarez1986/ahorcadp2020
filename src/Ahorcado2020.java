@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -15,7 +16,7 @@ public class Ahorcado2020 extends javax.swing.JFrame {
 
     int numeroFallos = 0;
 
-    String palabraOculta = "CETYS";
+    String palabraOculta = eligePalabra();
 //este metodo recibe el botón queha sido pulsado y procesamla letra que tiene en su etiqueta
 
     private void chequeaBoton(JButton boton) {
@@ -95,8 +96,20 @@ public class Ahorcado2020 extends javax.swing.JFrame {
     public Ahorcado2020() {
         initComponents();
         dibujaImagen();
+        //inicializo el jLabel en el que se muestran los guiones bajos
+        String auxiliar = "";
+        for (int i=0; i < palabraOculta.length();i++){
+        auxiliar = auxiliar +"_ ";
+        }
+        jLabel1.setText(auxiliar);
     }
-
+//eligePalabra va a seleccionar una palabra al azarde un array de palabras
+    private String eligePalabra(){
+    String[]listaPalabras ={"CETYS","HOLA","VLADIKAKA","BORREGUITO","BABYYODA"};
+    Random aleatorio = new Random();//variable aleatoria para elegir una palabra
+    int posicion = aleatorio.nextInt(listaPalabras.length);
+    return listaPalabras[posicion].toUpperCase();//elige la palabra de la lista y la combierte en mayusculas
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
